@@ -1,1 +1,5 @@
 {} (empty JSON)
+[
+    { "ssid": "MyHomeWiFi", "bssid": "AA:BB:CC:DD:EE:FF" },
+    { "ssid": "SchoolWiFi", "bssid": "11:22:33:44:55:66" }
+]
