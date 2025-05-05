@@ -2,6 +2,8 @@
 
 from scanner.wifi_scanner import scan_networks
 from scanner.rogue_detector import load_known_aps, detect_rogue_aps
+from scanner.rogue_detector import detect_duplicate_ssids
+
 
 if __name__ == "__main__":
     networks = scan_networks()
@@ -15,3 +17,9 @@ if __name__ == "__main__":
     print("\n--- Suspected Rogue APs ---")
     for rogue in rogue_aps:
         print(f"[!] {rogue['ssid']} ({rogue['bssid']}) — Possible Evil Twin")
+    
+    rogues = detect_duplicate_ssids(networks)
+    
+    print("\n--- Possible Rogue Access Points ---")
+    for ap in rogues:
+        print(f"[!] SSID: {ap['ssid']}, BSSIDs: {', '.join(ap['bssids'])}")
