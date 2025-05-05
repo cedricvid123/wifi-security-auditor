@@ -23,4 +23,25 @@ def detect_rogue_aps(scanned_aps, known_aps):
                 ap['suspected'] = True
                 rogue_aps.append(ap)
 
+    def detect_duplicate_ssids(networks):
+    ssid_map = {}
+
+    for net in networks:
+        ssid = net['ssid']
+        bssid = net['bssid']
+
+        if ssid not in ssid_map:
+            ssid_map[ssid] = set()
+        ssid_map[ssid].add(bssid)
+
+    # Flag SSIDs with multiple BSSIDs
+    rogue_aps = []
+    for ssid, bssids in ssid_map.items():
+        if len(bssids) > 1:
+            rogue_aps.append({
+                "ssid": ssid,
+                "bssids": list(bssids),
+                "reason": "Multiple BSSIDs detected (possible Evil Twin)"
+            })
+
     return rogue_aps
