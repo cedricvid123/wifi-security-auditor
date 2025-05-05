@@ -1,6 +1,7 @@
 # Rogue AP detection logic
 
 import json
+import time
 
 def load_known_aps(file_path='config/known_aps.json'):
     with open(file_path, 'r') as file:
@@ -45,3 +46,39 @@ def detect_rogue_aps(scanned_aps, known_aps):
             })
 
     return rogue_aps
+
+signal_history = {}
+
+def update_signal_history(networks, time_window=60):
+    current_time = time.time()
+
+    for net in networks:
+        bssid = net['bssid']
+        rssi = net['signal']
+
+        if bssid not in signal_history:
+            signal_history[bssid] = []
+
+        signal_history[bssid].append((current_time, rssi))
+
+        # Clean old entries
+        signal_history[bssid] = [
+            (t, s) for t, s in signal_history[bssid]
+            if current_time - t <= time_window
+        ]
+
+def detect_signal_fluctuation(threshold=20):
+    suspicious = []
+    for bssid, history in signal_history.items():
+        rssi_values = [s for t, s in history]
+        if len(rssi_values) >= 2:
+            fluctuation = max(rssi_values) - min(rssi_values)
+            if fluctuation > threshold:
+                suspicious.append({
+                    "bssid": bssid,
+                    "fluctuation": fluctuation,
+                    "reason": "Signal fluctuation over time (possible rogue or mobile AP)"
+                })
+    return suspicious
+
+
