@@ -24,8 +24,8 @@ def detect_rogue_aps(scanned_aps, known_aps):
                 ap['suspected'] = True
                 rogue_aps.append(ap)
 
- def detect_duplicate_ssids(networks):
- ssid_map = {}
+def detect_duplicate_ssids(networks):
+    ssid_map = {}
 
     for net in networks:
         ssid = net['ssid']
