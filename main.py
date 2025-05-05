@@ -4,9 +4,11 @@ from scanner.wifi_scanner import scan_networks
 from scanner.rogue_detector import load_known_aps, detect_rogue_aps
 from scanner.rogue_detector import detect_duplicate_ssids
 from scanner.rogue_detector import update_signal_history, detect_signal_fluctuation
+from ui.cli_ui import run_cli
 
 
 if __name__ == "__main__":
+    run_cli()
     networks = scan_networks()
     known_aps = load_known_aps()
     rogue_aps = detect_rogue_aps(networks, known_aps)
