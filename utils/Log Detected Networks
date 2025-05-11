@@ -1,9 +1,0 @@
-def log_network(ssid, bssid, signal_strength):
-    entry = {
-        "ssid": ssid,
-        "bssid": bssid,
-        "signal_strength": signal_strength,
-        "timestamp": datetime.now().isoformat()
-    }
-    event_log["networks_detected"].append(entry)
-    logging.info(f"Detected network: SSID={ssid}, BSSID={bssid}, Signal={signal_strength}")
