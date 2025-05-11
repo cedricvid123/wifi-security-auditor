@@ -1,0 +1,79 @@
+# wifi_audit_logger.py
+
+import logging
+import json
+from datetime import datetime
+import os
+
+# Set up logging to file
+logging.basicConfig(
+    filename='audit_log.txt',
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s'
+)
+
+# Global event log dictionary to store all events
+event_log = {
+    "networks_detected": [],
+    "handshake_attempts": [],
+    "cracking_results": []
+}
+
+def log_network(ssid, bssid, signal_strength):
+    entry = {
+        "ssid": ssid,
+        "bssid": bssid,
+        "signal_strength": signal_strength,
+        "timestamp": datetime.now().isoformat()
+    }
+    event_log["networks_detected"].append(entry)
+    logging.info(f"Detected network: SSID={ssid}, BSSID={bssid}, Signal={signal_strength}")
+
+def log_handshake(ssid, bssid, success=True):
+    entry = {
+        "ssid": ssid,
+        "bssid": bssid,
+        "timestamp": datetime.now().isoformat(),
+        "status": "success" if success else "failure"
+    }
+    event_log["handshake_attempts"].append(entry)
+    logging.info(f"Handshake capture {'succeeded' if success else 'failed'} for SSID={ssid}, BSSID={bssid}")
+
+def log_cracking_result(ssid, password_found, password=None):
+    entry = {
+        "ssid": ssid,
+        "timestamp": datetime.now().isoformat(),
+        "result": "success" if password_found else "failure",
+        "password": password if password_found else None
+    }
+    event_log["cracking_results"].append(entry)
+    if password_found:
+        logging.info(f"Password cracked for SSID={ssid}: {password}")
+    else:
+        logging.info(f"Password cracking failed for SSID={ssid}")
+
+def export_reports(directory="reports"):
+    os.makedirs(directory, exist_ok=True)
+
+    # Export JSON
+    json_path = os.path.join(directory, "wifi_audit_report.json")
+    with open(json_path, "w") as json_file:
+        json.dump(event_log, json_file, indent=4)
+
+    # Export TXT
+    txt_path = os.path.join(directory, "wifi_audit_report.txt")
+    with open(txt_path, "w") as txt_file:
+        for section, logs in event_log.items():
+            txt_file.write(f"=== {section.replace('_', ' ').title()} ===\n")
+            for entry in logs:
+                txt_file.write(f"{entry}\n")
+            txt_file.write("\n")
+
+    logging.info("Reports exported successfully.")
+
+# Example usage (for testing purposes only)
+if __name__ == "__main__":
+    log_network("TestNetwork", "00:11:22:33:44:55", -40)
+    log_handshake("TestNetwork", "00:11:22:33:44:55", True)
+    log_cracking_result("TestNetwork", True, "testpassword123")
+    export_reports()
