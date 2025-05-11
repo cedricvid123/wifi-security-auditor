@@ -1,9 +1,0 @@
-def log_handshake(ssid, bssid, success=True):
-    entry = {
-        "ssid": ssid,
-        "bssid": bssid,
-        "timestamp": datetime.now().isoformat(),
-        "status": "success" if success else "failure"
-    }
-    event_log["handshake_attempts"].append(entry)
-    logging.info(f"Handshake capture {'succeeded' if success else 'failed'} for SSID={ssid}, BSSID={bssid}")
