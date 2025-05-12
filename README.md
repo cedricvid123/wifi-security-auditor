@@ -171,11 +171,14 @@ from prettytable import PrettyTable
 def scan_wifi_networks():
    # Initialize the WiFi interface
    wifi = pywifi.PyWiFi()
+   
    iface = wifi.interfaces()[0]
    
    # Start scanning
    iface.scan()
+   
    print("Scanning for WiFi networks...")
+   
    time.sleep(3) # Wait for scan results
    
    # Get scan results
