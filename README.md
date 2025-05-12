@@ -214,3 +214,58 @@ if __name__ == "__main__":
 bash
 CopyEdit
 python wifi_scanner.py
+
+---
+
+Repository Structure
+
+|-- capture/                # Handles packet capturing functionalities
+|-- config/                 # Configuration files and settings
+|-- crack/                  # Password cracking mechanisms
+|-- reports/                # Generated audit reports
+|-- scanner/                # Wi-Fi network scanning
+|-- ui/                     # User interface components
+|-- utils/                  # Utility functions
+|-- main.py                 # Main entry point for the application
+|-- main_crack.py           # Password cracking process
+|-- crack_and_capture.py    # Integrated scanning, capturing, and cracking
+|-- requirements.txt        # List of dependencies
+|-- README.md               # Project documentation
+|-- LICENSE                 # License information
+
+---
+# Installation
+
+1. Clone the repository
+git clone https://github.com/cedricvid123/wifi-security-auditor.git
+cd wifi-security-auditor
+
+2. Install dependencies:
+
+   pip install -r requirements.txt
+
+3. Ensure system tools are available (e.g., aircrack-ng):
+
+   sudo apt-get install aircrack-ng
+
+---
+
+# Usage
+
+To scan available Wi-Fi networks:
+
+python main.py
+
+Cracking Passwords
+
+To initiate password cracking:
+
+python main_crack.py
+
+Combined Capture and Crack
+
+To perform packet capturing and password cracking:
+
+python crack_and_capture.py
+
+---
