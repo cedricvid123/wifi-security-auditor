@@ -124,7 +124,7 @@ Explanation:
 
 python
 CopyEdit
-print(table)
+  print(table)
 
 Explanation:
 
