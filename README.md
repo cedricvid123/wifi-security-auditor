@@ -1,18 +1,13 @@
 # Wi-Fi-security-auditor
 Wi-Fi network scanner and rogue AP detector in Python
 
-1. Import Required Libraries
+# 1. Import Required Libraries
 
 python
-
 CopyEdit
-
 import pywifi
-
 from pywifi import const
-
 import time
-
 from prettytable import PrettyTable
 
 Explanation:
@@ -27,7 +22,7 @@ Explanation:
 
 ---
 
-2. Initialize the WiFi Interface
+# 2. Initialize the WiFi Interface
 
 python
 
@@ -45,7 +40,7 @@ Explanation:
 
 ---
 
-3. Start Scanning for Networks
+# 3. Start Scanning for Networks
 
 python
 
@@ -65,7 +60,7 @@ Explanation:
 
 ---
 
-4. Fetch the Scan Results
+# 4. Fetch the Scan Results
 
 python
 
@@ -81,7 +76,7 @@ Explanation:
 
 ---
 
-5. Create a Pretty Table for Display
+# 5. Create a Pretty Table for Display
 
 python
 
@@ -99,7 +94,7 @@ Explanation:
 
 ---
 
-6. Loop Through Networks and Collect Data
+# 6. Loop Through Networks and Collect Data
 
 python
 
@@ -166,7 +161,7 @@ o A formatted table (table) for pretty display.
 
 ---
 
-7. Display the Networks
+# 7. Display the Networks
 
 python
 
@@ -180,7 +175,7 @@ Explanation:
 
 ---
 
-8. Return the List of Networks
+# 8. Return the List of Networks
 
 python
 
@@ -194,7 +189,7 @@ Explanation:
 
 ---
 
-9. Main Function Entry Point
+# 9. Main Function Entry Point
 
 python
 
