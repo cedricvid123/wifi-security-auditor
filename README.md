@@ -2,12 +2,6 @@
 Wi-Fi security auditing is the process of analyzing, testing, and assessing the security posture of a wireless network to identify vulnerabilities, misconfigurations, and potential weaknesses that could be exploited by attackers.
 
 # 1. Import Required Libraries
-python
-CopyEdit
-import pywifi
-from pywifi import const
-import time
-from prettytable import PrettyTable
 
 Explanation:
 
@@ -23,7 +17,7 @@ Explanation:
 
 # 2. Initialize the WiFi Interface
 
-python
+
 CopyEdit
 wifi = pywifi.PyWiFi()
 iface = wifi.interfaces()[0]
