@@ -237,15 +237,14 @@ Repository Structure
 # Installation
 
 1. Clone the repository
-git clone https://github.com/cedricvid123/wifi-security-auditor.git
+   git clone https://github.com/cedricvid123/wifi-security-auditor.git
+   cd wifi-security-auditor
 
-cd wifi-security-auditor
-
-3. Install dependencies:
+2. Install dependencies:
 
    pip install -r requirements.txt
 
-4. Ensure system tools are available (e.g., aircrack-ng):
+3. Ensure system tools are available (e.g., aircrack-ng):
 
    sudo apt-get install aircrack-ng
 
