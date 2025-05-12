@@ -2,7 +2,6 @@
 Wi-Fi network scanner and rogue AP detector in Python
 
 # 1. Import Required Libraries
-
 python
 CopyEdit
 import pywifi
