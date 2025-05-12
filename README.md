@@ -252,17 +252,17 @@ Repository Structure
 
 # Usage
 
-To scan available Wi-Fi networks:
+# To scan available Wi-Fi networks:
 
 python main.py
 
-Cracking Passwords
+# Cracking Passwords
 
 To initiate password cracking:
 
 python main_crack.py
 
-Combined Capture and Crack
+# Combined Capture and Crack
 
 To perform packet capturing and password cracking:
 
