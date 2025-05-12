@@ -1,22 +1,63 @@
 import os
-from capture import capture_handshake
-from crack import crack_password
-from logger import parse_and_log
+import time
+from wifi_scanner import scan_wifi_networks
+from result_logger import log_results_to_csv, log_results_to_json
 
-# === CONFIGURATION ===
-INTERFACE = 'wlan0mon'
-BSSID = '00:11:22:33:44:55'
-CHANNEL = '6'
-WORDLIST = 'rockyou.txt'
-OUTPUT_PREFIX = 'capture'
+# === Global Variables ===
+CSV_FILE = "data/wifi_scan_results.csv"
+JSON_FILE = "data/wifi_scan_results.json"
 
-# === SETUP ===
-os.makedirs('reports', exist_ok=True)
+# === Ensure 'data' directory exists ===
+if not os.path.exists('data'):
+    os.makedirs('data')
 
-# === MAIN ===
-if __name__ == '__main__':
-    capture_handshake(INTERFACE, BSSID, CHANNEL, OUTPUT_PREFIX)
-    cap_file = f'captures/{OUTPUT_PREFIX}-01.cap'
-    crack_output = crack_password(cap_file, WORDLIST, BSSID)
-    result = parse_and_log(crack_output, BSSID)
-    print(f"[*] Crack Result: {result}")
+
+# === Main Workflow Controller ===
+def main():
+    print("🚀 Starting WiFi Security Auditor...")
+    print("===================================")
+
+    while True:
+        print("\nChoose an option:")
+        print("[1] Scan for WiFi networks")
+        print("[2] View last scan results")
+        print("[3] Export to CSV and JSON")
+        print("[4] Exit")
+
+        choice = input("\nEnter your choice: ")
+
+        if choice == '1':
+            print("\n🔍 Scanning for networks...")
+            networks = scan_wifi_networks()
+            print("\n✅ Scan complete.")
+            log_results_to_csv(networks, CSV_FILE)
+            log_results_to_json(networks, JSON_FILE)
+
+        elif choice == '2':
+            if os.path.exists(CSV_FILE):
+                print("\n📂 Displaying last scan results:")
+                with open(CSV_FILE, 'r') as file:
+                    print(file.read())
+            else:
+                print("\n❌ No results found. Please scan first.")
+
+        elif choice == '3':
+            if os.path.exists(CSV_FILE) and os.path.exists(JSON_FILE):
+                print(f"\n✅ Data successfully exported to:\n- {CSV_FILE}\n- {JSON_FILE}")
+            else:
+                print("\n❌ No data to export. Please scan first.")
+
+        elif choice == '4':
+            print("\n👋 Exiting WiFi Security Auditor. Goodbye!")
+            break
+
+        else:
+            print("\n❌ Invalid choice. Please try again.")
+
+        print("\n===============================")
+        time.sleep(2)  # Wait before refreshing options
+
+
+# === Main Script Entry Point ===
+if __name__ == "__main__":
+    main()
