@@ -25,11 +25,8 @@ Explanation:
 # 2. Initialize the WiFi Interface
 
 python
-
 CopyEdit
-
 wifi = pywifi.PyWiFi()
-
 iface = wifi.interfaces()[0]
 
 Explanation:
@@ -43,13 +40,9 @@ Explanation:
 # 3. Start Scanning for Networks
 
 python
-
 CopyEdit
-
 iface.scan()
-
 print("Scanning for WiFi networks...")
-
 time.sleep(3) # Wait for scan results to populate
 
 Explanation:
@@ -63,9 +56,7 @@ Explanation:
 # 4. Fetch the Scan Results
 
 python
-
 CopyEdit
-
 scan_results = iface.scan_results()
 
 Explanation:
@@ -79,11 +70,8 @@ Explanation:
 # 5. Create a Pretty Table for Display
 
 python
-
 CopyEdit
-
 table = PrettyTable(["SSID (Name)", "BSSID (MAC Address)", "Signal Strength (dBm)", "Encryption Type"])
-
 networks = []
 
 Explanation:
@@ -97,46 +85,26 @@ Explanation:
 # 6. Loop Through Networks and Collect Data
 
 python
-
 CopyEdit
-
 for network in scan_results:
+    ssid = network.ssid
+    bssid = network.bssid
+    signal = network.signal
 
-ssid = network.ssid
+    # Determine encryption type
 
-bssid = network.bssid
+    if network.akm:
+       encryption = " / ".join([str(akm).split('.')[-1] for akm in network.akm])
 
-signal = network.signal
-
-
-# Determine encryption type
-
-if network.akm:
-
-encryption = " / ".join([str(akm).split('.')[-1] for akm in network.akm])
-
-else:
-
-encryption = "Open"
+       else:
+       encryption = "Open"
 
 
 # Append data to the list
 
-networks.append({
-
-"SSID": ssid,
-
-"BSSID": bssid,
-
-"Signal": signal,
-
-"Encryption": encryption
-
-})
-
+networks.append({"SSID": ssid, "BSSID": bssid, "Signal": signal, "Encryption": encryption})
 
 # Add to the display table
-
 table.add_row([ssid, bssid, signal, encryption])
 
 Explanation:
@@ -144,29 +112,21 @@ Explanation:
 · Loops through all the networks found.
 
 · Extracts:
-
-o SSID → Network name.
-
-o BSSID → MAC address.
-
-o Signal → Signal strength in dBm.
-
-o Encryption → Security type (WPA, WPA2, Open, etc.).
+    o SSID → Network name.
+    o BSSID → MAC address.
+    o Signal → Signal strength in dBm.
+    o Encryption → Security type (WPA, WPA2, Open, etc.).
 
 · Appends the data to:
-
-o A list (networks) for easy access.
-
-o A formatted table (table) for pretty display.
+    o A list (networks) for easy access.
+    o A formatted table (table) for pretty display.
 
 ---
 
 # 7. Display the Networks
 
 python
-
 CopyEdit
-
 print(table)
 
 Explanation:
@@ -178,9 +138,7 @@ Explanation:
 # 8. Return the List of Networks
 
 python
-
 CopyEdit
-
 return networks
 
 Explanation:
@@ -192,12 +150,9 @@ Explanation:
 # 9. Main Function Entry Point
 
 python
-
 CopyEdit
-
 if __name__ == "__main__":
-
-networks = scan_wifi_networks()
+    networks = scan_wifi_networks()
 
 Explanation:
 
@@ -210,108 +165,59 @@ Explanation:
 Full Script: wifi_scanner.py
 
 python
-
 CopyEdit
-
 import pywifi
-
 from pywifi import const
-
 import time
-
 from prettytable import PrettyTable
 
-
 def scan_wifi_networks():
-
-# Initialize the WiFi interface
-
-wifi = pywifi.PyWiFi()
-
-iface = wifi.interfaces()[0]
-
-
-# Start scanning
-
-iface.scan()
-
-print("Scanning for WiFi networks...")
-
-time.sleep(3) # Wait for scan results
-
-
-# Get scan results
-
-scan_results = iface.scan_results()
-
-
-# Create a formatted table for display
-
-table = PrettyTable(["SSID (Name)", "BSSID (MAC Address)", "Signal Strength (dBm)", "Encryption Type"])
-
-networks = []
-
-
-for network in scan_results:
-
-ssid = network.ssid
-
-bssid = network.bssid
-
-signal = network.signal
-
-# Determine encryption type
-
-if network.akm:
-
-encryption = " / ".join([str(akm).split('.')[-1] for akm in network.akm])
-
-else:
-
-encryption = "Open"
-
-
-# Append data to the list
-
-networks.append({
-
-"SSID": ssid,
-
-"BSSID": bssid,
-
-"Signal": signal,
-
-"Encryption": encryption
-
-})
-
-
-# Add to the display table
-
-table.add_row([ssid, bssid, signal, encryption])
-
-
-# Display the networks in table format
-
-print(table)
-
-
-# Return the list of networks
-
-return networks
-
-
+   # Initialize the WiFi interface
+   wifi = pywifi.PyWiFi()
+   iface = wifi.interfaces()[0]
+   
+   # Start scanning
+   iface.scan()
+   print("Scanning for WiFi networks...")
+   time.sleep(3) # Wait for scan results
+   
+   # Get scan results
+   scan_results = iface.scan_results()
+   
+   # Create a formatted table for display
+   table = PrettyTable(["SSID (Name)", "BSSID (MAC Address)", "Signal Strength (dBm)", "Encryption Type"])
+   networks = []
+   
+   for network in scan_results:
+   ssid = network.ssid
+   bssid = network.bssid
+   signal = network.signal
+   
+   # Determine encryption type
+   if network.akm:
+   encryption = " / ".join([str(akm).split('.')[-1] for akm in network.akm])
+   else:
+      encryption = "Open"
+    
+    # Append data to the list
+    networks.append({"SSID": ssid, "BSSID": bssid, "Signal": signal, "Encryption": encryption})
+    
+    # Add to the display table
+    table.add_row([ssid, bssid, signal, encryption])
+    
+    # Display the networks in table format
+    print(table)
+    
+    # Return the list of networks
+    return networks
 
 if __name__ == "__main__":
-
-networks = scan_wifi_networks()
+   networks = scan_wifi_networks()
 
 ---
 
 To Run the Script
 
 bash
-
 CopyEdit
-
 python wifi_scanner.py
